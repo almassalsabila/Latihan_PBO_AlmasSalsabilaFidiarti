@@ -65,13 +65,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineTech Dashboard - Almas Salsabila</title>
     <style>
-        /* IMPLEMENTASI PALET WARNA BARU */
+        /* IMPLEMENTASI PALET WARNA */
         :root {
-            --bg-black: #000000;         /* Hitam murni untuk background utama */
-            --brand-red: #8E1616;        /* Merah marun untuk aksen & button aktif */
-            --accent-gold: #E8C999;      /* Krem emas untuk teks highlight & border */
-            --text-light: #F8EEDF;       /* Putih gading hangat untuk teks utama */
-            --bg-card: #141414;          /* Hitam abu-abu tipis agar card terlihat */
+            --bg-black: #000000;         
+            --brand-red: #8E1616;        
+            --accent-gold: #E8C999;      
+            --text-light: #F8EEDF;       
+            --bg-card: #141414;          
         }
 
         body { 
@@ -84,7 +84,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             min-height: 100vh;
         }
 
-        /* SIDEBAR NAVIGATION (MENU SEBELAH KIRI) */
+        /* SIDEBAR NAVIGATION (TETAP DIPERTAHANKAN) */
         .sidebar {
             width: 260px;
             background-color: #0a0a0a;
@@ -149,38 +149,39 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             box-shadow: 0 4px 15px rgba(142, 22, 22, 0.4);
         }
 
-        /* MAIN CONTENT AREA (SEBELAH KANAN) */
+        /* MAIN CONTENT AREA */
         .main-content {
-            margin-left: 260px; /* Memberi ruang untuk sidebar */
-            flex-1: 1;
+            margin-left: 260px; 
+            flex: 1;
             padding: 40px;
             width: calc(100% - 260px);
             box-sizing: border-box;
         }
 
-        /* STATS GRID COMPONENT */
+        /* STATS GRID COMPONENT (Disesuaikan menjadi 2 kolom karena kartu '3 Turunan' dihapus) */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
 
         .stat-card {
             background-color: var(--bg-card);
-            padding: 20px;
+            padding: 22px;
             border-radius: 12px;
-            border: 1px solid rgba(232, 201, 153, 0.1);
+            border: 1px solid rgba(232, 201, 153, 0.08);
             border-left: 5px solid var(--brand-red);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .stat-card h3 { margin: 0 0 8px 0; font-size: 12px; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-card .value { font-size: 24px; font-weight: bold; color: #fff; }
+        .stat-card .value { font-size: 26px; font-weight: bold; color: #fff; }
 
         /* STUDIO SECTIONS */
         .studio-section { 
             background-color: var(--bg-card);
-            border: 1px solid rgba(232, 201, 153, 0.1);
+            border: 1px solid rgba(232, 201, 153, 0.08);
             border-radius: 16px; 
             padding: 25px; 
             margin-bottom: 40px;
@@ -204,7 +205,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             font-size: 11px;
             background-color: var(--brand-red);
             color: #fff;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 12px;
             font-weight: bold;
         }
@@ -272,7 +273,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 </head>
 <body>
 
-    <!-- SIDEBAR LEFT (MENU KIRI) -->
+    <!-- SIDEBAR LEFT (MENU DAN IDENTITAS TETAP UTUH) -->
     <div class="sidebar">
         <h2>CineTech</h2>
         <div class="admin-tag">Almas Salsabila</div>
@@ -285,15 +286,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         </div>
     </div>
 
-    <!-- MAIN CONTENT RIGHT (KONTEN KANAN) -->
+    <!-- MAIN CONTENT RIGHT -->
     <div class="main-content">
         
-        <!-- DASHBOARD STATS CARD -->
+        <!-- DASHBOARD STATS CARD (Hanya menyisakan 2 kartu utama) -->
         <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Kategori Kelas</h3>
-                <div class="value">3 Turunan</div>
-            </div>
             <div class="stat-card" style="border-left-color: var(--accent-gold);">
                 <h3>Kursi Terpesan</h3>
                 <div class="value"><?php echo $totalTiketTerpesan; ?> Kursi</div>
@@ -338,7 +335,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         <td><strong><?php echo $tiket->getJumlahKursi(); ?></strong> Kursi</td>
                                         <td><small>Rp <?php echo number_format($tiket->getHargaDasarTiket(), 0, ',', '.'); ?></small></td>
                                         
-                                        <!-- POLIMORFISME METODE -->
                                         <td>
                                             <div class="facility-text">
                                                 <?php echo $tiket->tampilkanInfoFasilitas(); ?>
@@ -362,12 +358,10 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <!-- SCRIPT FILTER DINAMIS -->
     <script>
     function filterStudio(type, button) {
-        // 1. Ubah status tombol aktif di sidebar
         const buttons = document.querySelectorAll('.menu-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        // 2. Sembunyikan atau Tampilkan Section Studio di sebelah kanan
         const sections = document.querySelectorAll('.studio-section');
         sections.forEach(section => {
             if (type === 'all' || section.getAttribute('data-studio') === type) {
