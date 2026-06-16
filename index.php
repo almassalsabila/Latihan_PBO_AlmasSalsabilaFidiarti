@@ -1,6 +1,6 @@
 <?php
 // Mengimport semua file yang dibutuhkan
-require_once 'Database.php';
+require_once 'database.php';
 require_once 'tiketReguler.php';
 require_once 'tiketIMAX.php';
 require_once 'tiketVelvet.php';

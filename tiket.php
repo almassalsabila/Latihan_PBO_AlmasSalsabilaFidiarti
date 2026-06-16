@@ -25,12 +25,12 @@ abstract class Tiket {
 
     // Metode abstrak untuk menampilkan fasilitas spesifik berdasarkan jenis studio
     abstract public function tampilkanInfoFasilitas();
-}
-?>
 
-// Fungsi Getter untuk mengakses properti protected di halaman View
+    // Fungsi Getter untuk mengakses properti protected di halaman View
     public function getIdTiket() { return $this->id_tiket; }
     public function getNamaFilm() { return $this->nama_film; }
     public function getJadwalTayang() { return $this->jadwal_tayang; }
     public function getJumlahKursi() { return $this->jumlah_kursi; }
     public function getHargaDasarTiket() { return $this->hargaDasarTiket; }
+}
+?>
